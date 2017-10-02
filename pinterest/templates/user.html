@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Users</title>
+	{% load static %}
+    
+<body>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Is Seller</th>
+      <th>User ID</th>
+      <th>Created Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in user_list %}
+      <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.isSeller }}</td>
+        <td>{{ user.user_id }}</td>
+        <td>{{ user.created_date }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+	
+
+
+{% if user_list.has_other_pages %}
+  <ul class="pagination">
+    {% if user_list.has_previous %}
+      <li><a href="?page={{ user_list.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in user_list.paginator.page_range %}
+      {% if user_list.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if user_list.has_next %}
+      <li><a href="?page={{ user_list.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+
+
+
+
+      <div class="pagination">
+    <span class="step-links">
+        {% if user_list.has_previous %}
+            <a href="?page={{ user_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.
+        </span>
+
+        {% if user_list.has_next %}
+            <a href="?page={{ user_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
+      {% block content %}
+      <h1>Hello {{user_name}}</h1>
+    <h1>New User</h1>
+    <form name = "form" action = "/user/"  method="POST" >
+       {% csrf_token %}
+       {{ form.as_p }}
+        <button type="submit" value="Submit">Save</button>
+    </form>
+{% endblock %}
+      
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pinterest</title>
+	{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+
+<body>
+
+<p> Hello {{user_name}}
+	    <form name = "form" action = "/"  method="POST" >
+       {% csrf_token %}
+       {{ form.as_p }}
+        <button type="submit" value="Submit">Save</button>
+    </form>     
+      
+</body>
+</html>
